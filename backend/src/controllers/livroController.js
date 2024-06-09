@@ -1,8 +1,7 @@
-// Segundo: a rota passa por aqui depois da 'rota'
-
 import livro from "../models/Livro.js";
 
 class LivroController {
+
     static async listarLivros(req, res){
         try {
             const listaLivros = await livro.find({});
@@ -10,17 +9,22 @@ class LivroController {
         } catch (error) {
             res.status(500).json({ message: `${error.message} - falha ao listar livros`});
         }
-    }
+    } 
 
     static async listarLivroPorId (req, res){
         try {
             const id = req.params.id;
-            const livroEncontrado = await livro.findById(id);
-            res.status(200).json(livroEncontrado) 
+            const livroBuscado = await livro.findById(id);
+
+            if (livroBuscado !== null){
+                res.status(200).send(livroBuscado);
+            } else {
+                res.status(400).send({message: "Id do Livro nao encontrado"});
+            }
         } catch (error) {
-            res.status(500).json({ message: `${error.message} - falha ao listar livro`});
+            res.status(500).send({ message: 'Erro interno do servidor'});
         }
-    }
+    };
 
     static async cadastrarLivros(req, res){
         try {
