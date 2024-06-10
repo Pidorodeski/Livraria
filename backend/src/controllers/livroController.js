@@ -5,7 +5,6 @@ class LivroController {
 
     static async listarLivros(req, res, next){
         try {
-            //throw new Error()
             const listaLivros = await livro.find({});
             res.status(200).json(listaLivros);
         } catch (error) {
@@ -30,19 +29,14 @@ class LivroController {
 
     static listarLivroPorFiltro = async (req, res, next) => {
         try {
-            const {titulo, editora} = req.query;
-
-            const busca = {};
-
-            if (editora) busca.editora = editora;
-            if (titulo) busca.titulo = titulo;
+            const busca = processaBusca(req.query);
 
             const livroResultado = await livro.find(busca);
-            res.status(200).send(livroResultado)
 
+            res.status(200).send(livroResultado)
         } catch (error) {
             next(error);
-        }
+        };
     }
 
     static listarLivroPorEditora = async (req, res, next) => {
@@ -94,6 +88,28 @@ class LivroController {
             next(error);
         }
     }
+
+    static specialDeleteLivros = async (req, res, next) => {
+        try {
+          await livro.deleteMany({});
+          res.status(200).json({ message: "Todos os livros foram deletados" });
+        } catch (error) {
+          next(error);
+        }
+      }
+};
+
+function processaBusca(parametros) {
+    const {titulo, editora} = parametros;
+
+    const busca = {};
+
+    if(titulo) busca.titulo = {$regex: titulo, $options: "i"};
+    if(editora) busca.editora = {$regex: editora, $options: "i"};
+
+
+
+    return busca;
 };
 
 export default LivroController;
