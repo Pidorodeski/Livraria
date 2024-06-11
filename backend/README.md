@@ -19,7 +19,7 @@ Para o banco, está sendo utilizado o banco de dados na nuvem com MongoDB Atlas,
 
 2. Acesse este tutorial e siga os passo a passo para criar o seu banco de dados (Atenção ao criar o username e password pois esses dados serão utilizados na configuração da conexão): [Criando um banco de dados na nuvem com MongoDB Atlas](https://sites.google.com/site/proflucasscf/programa%C3%A7%C3%A3o-web-back-end/criando-um-banco-de-dados-na-nuvem-com-mongodb-atlas) 
 
-3 - Após realizar os passos acima, você terá obtido a string de conexão do banco, insira esse texto na variavel de conexão criada no arquivo .env, alterando o campo <username> e <password> pelo usuario e senha que você configurou, devendo ficar da seguinte forma:
+3. Após realizar os passos acima, você terá obtido a string de conexão do banco, insira esse texto na variavel de conexão criada no arquivo .env, alterando o campo <username> e <password> pelo usuario e senha que você configurou, devendo ficar da seguinte forma:
 ```DB_CONNECTION_STRING=mongodb+srv://meu_usuario:minha_senha@cluster0.adozvpx.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0```
 
 ### Populando Banco de Dados
