@@ -7,8 +7,8 @@ class LivroController {
         try {
             const buscaLivros = livro.find();
             req.resultado = buscaLivros;
-
             next();
+
         } catch (error) {
             next(error);
         }
@@ -34,11 +34,12 @@ class LivroController {
             const busca = await processaBusca(req.query);
 
             if (busca !== null) {
-                const livroResultado = await livro
+                const livroResultado = livro
                 .find(busca)
                 .populate("autor");
 
-            res.status(200).send(livroResultado)
+            req.resultado = livroResultado;
+            next();
             } else {
                 res.status(200).send([]);
             }
