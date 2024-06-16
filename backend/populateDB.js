@@ -1,13 +1,30 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 import "dotenv/config";
-import autores from './src/models/Autor.js'
+import autores from './src/models/Autor.js';
 import livro from "./src/models/Livro.js";
+import usuario from "./src/models/Usuario.js";
 
 
 // Conectar-se ao banco de dados MongoDB
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then(async () => {
         console.log('Conectado ao MongoDB');
+
+        const dadosUsuarios = [
+            {nome: 'Cristian Rocha Pidorodeski', cpf: '45594327088', dataNascimento: '1993-07-29'},
+            {nome: 'Marcs Antonio de Almeida', cpf: '59062675069', dataNascimento: '2000-11-02'},
+            {nome: 'Felipe Wasmannd Rattova', cpf: '04472007045', dataNascimento: '1998-11-22'},
+            {nome: 'Paulo Paulinho Paulão', cpf: '00007497024', dataNascimento: '2002-12-15'},
+            {nome: 'Kenshin Himura Battousai', cpf: '24480370005', dataNascimento: '2005-06-30'},
+            {nome: 'Uzumaki Naruto', cpf: '31482363003', dataNascimento: '2010-01-02'},
+        ]
+
+        // Inserir os dados dos autores e capturar os IDs gerados
+        await usuario.insertMany(dadosUsuarios);
+        console.log('Realizado insert dos dados de usuário com sucesso');
+
+
+
         // Array de dados a serem inseridos
         const dadosAutores = [
             { nome: 'J. R. R. Tolkien', nacionalidade: 'Inglaterra' },
