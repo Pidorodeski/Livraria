@@ -35,7 +35,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[0],
                 observacao: 'Um clássico da literatura fantástica', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1954-07-29') 
+                dataPublicacao: new Date('1954-07-29'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'O Código da Vinci', 
@@ -43,7 +44,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[1],
                 observacao: 'Intrigante mistério envolvendo códigos e conspirações', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('2003-03-18') 
+                dataPublicacao: new Date('2003-03-18'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'Harry Potter e a Pedra Filosofal', 
@@ -51,7 +53,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[2],
                 observacao: 'O primeiro livro da série Harry Potter', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1997-06-26') 
+                dataPublicacao: new Date('1997-06-26'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'O Senhor dos Anéis', 
@@ -59,7 +62,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[0],
                 observacao: 'Uma jornada épica pela Terra Média', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1954-10-20') 
+                dataPublicacao: new Date('1954-10-20'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'A Revolução dos Bichos', 
@@ -67,7 +71,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[3],
                 observacao: 'Uma alegoria política sobre a Revolução Russa', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1945-08-17') 
+                dataPublicacao: new Date('1945-08-17'),
+                estaDisponivel: false 
             },
             { 
                 titulo: '1984', 
@@ -75,7 +80,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[3],
                 observacao: 'Um romance distópico sobre controle totalitário', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1949-06-08') 
+                dataPublicacao: new Date('1949-06-08'),
+                estaDisponivel: false
             },
             { 
                 titulo: 'Orgulho e Preconceito', 
@@ -91,7 +97,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[5],
                 observacao: 'Um clássico da literatura infantil com profundas mensagens filosóficas', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1943-04-06') 
+                dataPublicacao: new Date('1943-04-06'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'Dom Quixote', 
@@ -99,7 +106,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[6], 
                 observacao: 'Um romance de cavalaria clássico', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1605-01-16') 
+                dataPublicacao: new Date('1605-01-16'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'A Metamorfose', 
@@ -107,7 +115,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[7], 
                 observacao: 'Um conto surreal sobre um homem que se transforma em inseto', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1915-10-15') 
+                dataPublicacao: new Date('1915-10-15'),
+                estaDisponivel: true
             }
         ]
         
