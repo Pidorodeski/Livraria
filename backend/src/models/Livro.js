@@ -26,11 +26,15 @@ const livroSchema = new mongoose.Schema(
             },
         },
         dataInclusao: {type: Date},
-        dataPublicacao: {type: Date}
+        dataPublicacao: {type: Date},
+        estaDisponivel: {
+            type: Boolean,
+            default: true
+        }
     }, 
-{
-    versionKey: false
-}
+    {
+        versionKey: false
+    }
 );
 
 const livro = mongoose.model("livros", livroSchema);

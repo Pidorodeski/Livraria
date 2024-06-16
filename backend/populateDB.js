@@ -1,13 +1,30 @@
-import mongoose from "mongoose"
+import mongoose from "mongoose";
 import "dotenv/config";
-import autores from './src/models/Autor.js'
+import autores from './src/models/Autor.js';
 import livro from "./src/models/Livro.js";
+import usuario from "./src/models/Usuario.js";
 
 
 // Conectar-se ao banco de dados MongoDB
 mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then(async () => {
         console.log('Conectado ao MongoDB');
+
+        const dadosUsuarios = [
+            {nome: 'Cristian Rocha Pidorodeski', cpf: '45594327088', dataNascimento: '1993-07-29'},
+            {nome: 'Marcs Antonio de Almeida', cpf: '59062675069', dataNascimento: '2000-11-02'},
+            {nome: 'Felipe Wasmannd Rattova', cpf: '04472007045', dataNascimento: '1998-11-22'},
+            {nome: 'Paulo Paulinho Paulão', cpf: '00007497024', dataNascimento: '2002-12-15'},
+            {nome: 'Kenshin Himura Battousai', cpf: '24480370005', dataNascimento: '2005-06-30'},
+            {nome: 'Uzumaki Naruto', cpf: '31482363003', dataNascimento: '2010-01-02'},
+        ]
+
+        // Inserir os dados dos autores e capturar os IDs gerados
+        await usuario.insertMany(dadosUsuarios);
+        console.log('Realizado insert dos dados de usuário com sucesso');
+
+
+
         // Array de dados a serem inseridos
         const dadosAutores = [
             { nome: 'J. R. R. Tolkien', nacionalidade: 'Inglaterra' },
@@ -35,7 +52,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[0],
                 observacao: 'Um clássico da literatura fantástica', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1954-07-29') 
+                dataPublicacao: new Date('1954-07-29'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'O Código da Vinci', 
@@ -43,7 +61,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[1],
                 observacao: 'Intrigante mistério envolvendo códigos e conspirações', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('2003-03-18') 
+                dataPublicacao: new Date('2003-03-18'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'Harry Potter e a Pedra Filosofal', 
@@ -51,7 +70,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[2],
                 observacao: 'O primeiro livro da série Harry Potter', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1997-06-26') 
+                dataPublicacao: new Date('1997-06-26'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'O Senhor dos Anéis', 
@@ -59,7 +79,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[0],
                 observacao: 'Uma jornada épica pela Terra Média', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1954-10-20') 
+                dataPublicacao: new Date('1954-10-20'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'A Revolução dos Bichos', 
@@ -67,7 +88,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[3],
                 observacao: 'Uma alegoria política sobre a Revolução Russa', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1945-08-17') 
+                dataPublicacao: new Date('1945-08-17'),
+                estaDisponivel: false 
             },
             { 
                 titulo: '1984', 
@@ -75,7 +97,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[3],
                 observacao: 'Um romance distópico sobre controle totalitário', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1949-06-08') 
+                dataPublicacao: new Date('1949-06-08'),
+                estaDisponivel: false
             },
             { 
                 titulo: 'Orgulho e Preconceito', 
@@ -91,7 +114,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[5],
                 observacao: 'Um clássico da literatura infantil com profundas mensagens filosóficas', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1943-04-06') 
+                dataPublicacao: new Date('1943-04-06'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'Dom Quixote', 
@@ -99,7 +123,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[6], 
                 observacao: 'Um romance de cavalaria clássico', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1605-01-16') 
+                dataPublicacao: new Date('1605-01-16'),
+                estaDisponivel: true
             },
             { 
                 titulo: 'A Metamorfose', 
@@ -107,7 +132,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                 autor: autoresIds[7], 
                 observacao: 'Um conto surreal sobre um homem que se transforma em inseto', 
                 dataInclusao: new Date(), 
-                dataPublicacao: new Date('1915-10-15') 
+                dataPublicacao: new Date('1915-10-15'),
+                estaDisponivel: true
             }
         ]
         
