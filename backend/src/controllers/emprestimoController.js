@@ -2,6 +2,17 @@ import { emprestimo, livro, usuario } from "../models/index.js";
 import NaoEncontrado from "../erros/NaoEncontrado.js";
 
 class EmprestimoController {
+    static listarEmprestimos = async (req, res, next) =>{
+        try {
+            const buscaEmprestimos = emprestimo.find();
+            req.resultado = buscaEmprestimos;
+            next();
+        } catch (error) {
+            next(error);
+        }
+    }
+
+
     static realizarEmprestimo = async (req, res, next) =>{
         try {
             const livroId = req.params.idLivro;
