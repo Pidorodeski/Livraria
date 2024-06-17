@@ -2,6 +2,6 @@ import "./validadorGlobal.js"
 import livro from "./Livro.js";
 import autores from "./Autor.js";
 import usuario from "./Usuario.js";
+import emprestimo from "./Enprestimo.js";
 
-
-export {livro, autores, usuario};
+export {livro, autores, usuario, emprestimo};
