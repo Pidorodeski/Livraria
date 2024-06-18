@@ -65,6 +65,15 @@ class UsuarioController {
             next(error);
         }
     }
+
+    static specialDeleteUsuarios = async (req, res, next) => {
+        try {
+            await usuario.deleteMany({});
+            res.status(200).json({message: "Todo os usuarios foram deletados"});
+        } catch (error) {
+            
+        }
+    }
 }
 
 async function processaBusca(parametros) {
