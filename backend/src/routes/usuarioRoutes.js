@@ -9,5 +9,6 @@ routes.get("/usuarios/busca", UsuarioController.listarUsuarioPorFiltro, paginar)
 routes.get("/usuarios/:id", UsuarioController.listarUsuarioPorId);
 routes.post("/usuarios", UsuarioController.cadastrarUsuario);
 routes.delete("/usuarios/:id", UsuarioController.deletarUsuario);
+routes.delete("/deletar_usuarios", UsuarioController.specialDeleteUsuarios);
 
 export default routes;
