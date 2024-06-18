@@ -63,7 +63,7 @@ O servidor estará online no seguinte endereço: http://localhost:3000
 - **GET /autores/:id**: Lista um autor por ID.
 - **POST /autores**: Cadastra um novo autor.
 - **DELETE /autores/:id**: Deleta um autor por ID.
-- **DELETE /deletar_autores**: Deleta todos os autores ou aplica uma operação especial de delete.
+- **DELETE /deletar_autores**: Deleta todos os autores em uma operação especial de delete. (Remover depois)
 
 ### Livros
 ```json
@@ -87,7 +87,7 @@ A API de busca pode ser utilizada para filtrar um livro por titulo, editora e no
 - **PUT /livros/:id**: Atualiza um livro por ID.
 - **POST /livros**: Cadastra um novo livro.
 - **DELETE /livros/:id**: Deleta um livro por ID.
-- **DELETE /deletar_livros**: Deleta todos os livros ou aplica uma operação especial de delete.
+- **DELETE /deletar_livros**: Deleta todos os livros em uma operação especial de delete. (Remover depois)
 
 ### Usuarios
 ```json
@@ -106,7 +106,7 @@ A API de busca pode ser utilizada para filtrar um usuario por nome e cpf. ex. "/
 - **GET /usuarios/:id**: Lista todos os usuario por id.
 - **POST /usuarios**: Cadastra um novo usuario.
 - **DELETE /usuarios/:id**: Deleta um usuario por ID.
-
+- **DELETE /usuarios/:id**: Deleta todos os usuarios em uma operação especial de delete. (Remover depois)
 
 ## Bibliotecas Utilizadas
 
