@@ -51,23 +51,62 @@ O servidor estará online no seguinte endereço: http://localhost:3000
 
 ## Estrutura das Rotas da API
 
-### Livros
-
-- **GET /livros**: Lista todos os livros.
-- **GET /livros/busca**: Lista livros por filtro.
-- **GET /livros/:id**: Lista um livro por ID.
-- **PUT /livros/:id**: Atualiza um livro por ID.
-- **POST /livros**: Cadastra um novo livro.
-- **DELETE /livros/:id**: Deleta um livro por ID.
-- **DELETE /deletar_livros**: Deleta todos os livros ou aplica uma operação especial de delete.
-
 ### Autores
+```json
+{
+    "nome": "Franz Kafka",
+    "nacionalidade": "República Tcheca"
+}
+```
 
 - **GET /autores**: Lista todos os autores.
 - **GET /autores/:id**: Lista um autor por ID.
 - **POST /autores**: Cadastra um novo autor.
 - **DELETE /autores/:id**: Deleta um autor por ID.
 - **DELETE /deletar_autores**: Deleta todos os autores ou aplica uma operação especial de delete.
+
+### Livros
+```json
+{
+    "titulo": "string",
+    "editora": "string",
+    "autor": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "observacao": "string",
+    "dataInclusao": "2024-06-16T20:56:55.996Z",
+    "dataPublicacao": "1915-10-15T00:00:00.000Z",
+    "estaDisponivel": false
+}
+```
+
+- **GET /livros**: Lista todos os livros.
+- **GET /livros/busca**: Lista livros por filtro.  
+```
+A API de busca pode ser utilizada para filtrar um livro por titulo, editora e nomeAutor. ex. "/livros/busca?editora=Surreal".
+```
+- **GET /livros/:id**: Lista um livro por ID.
+- **PUT /livros/:id**: Atualiza um livro por ID.
+- **POST /livros**: Cadastra um novo livro.
+- **DELETE /livros/:id**: Deleta um livro por ID.
+- **DELETE /deletar_livros**: Deleta todos os livros ou aplica uma operação especial de delete.
+
+### Usuarios
+```json
+{
+    "nome": "string",
+    "cpf": "45594327088",
+    "dataNascimento": "1993-07-29T00:00:00.000Z"
+}
+```
+
+- **GET /usuarios**: Lista todos os usuarios.
+- **GET /usuarios/busca**: Lista usuários por filtro
+```
+A API de busca pode ser utilizada para filtrar um usuario por nome e cpf. ex. "/usuarios/busca?nome=Cristian".
+```
+- **GET /usuarios/:id**: Lista todos os usuario por id.
+- **POST /usuarios**: Cadastra um novo usuario.
+- **DELETE /usuarios/:id**: Deleta um usuario por ID.
+
 
 ## Bibliotecas Utilizadas
 
