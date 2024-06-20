@@ -8,6 +8,7 @@ routes.get("/usuarios", UsuarioController.listarUsuarios, paginar);
 routes.get("/usuarios/busca", UsuarioController.listarUsuarioPorFiltro, paginar);
 routes.get("/usuarios/:id", UsuarioController.listarUsuarioPorId);
 routes.post("/usuarios", UsuarioController.cadastrarUsuario);
+routes.put("/usuarios/:id", UsuarioController.editarUsuario);
 routes.delete("/usuarios/:id", UsuarioController.deletarUsuario);
 routes.delete("/deletar_usuarios", UsuarioController.specialDeleteUsuarios);
 

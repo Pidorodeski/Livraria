@@ -51,6 +51,21 @@ class UsuarioController {
         }
     }
 
+    static editarUsuario = async (req, res, next) =>{
+        try {
+            const id = req.params.id;
+            const idResultado = await usuario.findByIdAndUpdate(id, {$set: req.body});
+
+            if (idResultado !== null){
+                res.status(200).send({message: "Usuario atualizado com sucesso"})
+            } else {
+                next(new NaoEncontrado("Id do usuario nao encontrado"));
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
     static deletarUsuario = async (req, res, next) =>{
         try {
             const id = req.params.id;
