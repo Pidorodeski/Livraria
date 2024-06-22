@@ -10,6 +10,14 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
     .then(async () => {
         console.log('Conectado ao MongoDB');
 
+        // Limpar as coleções
+        await Promise.all([
+            usuario.deleteMany({}),
+            autores.deleteMany({}),
+            livro.deleteMany({})
+        ]);
+        console.log('Dados antigos removidos das coleções');
+
         const dadosUsuarios = [
             {nome: 'Cristian Rocha Pidorodeski', cpf: '45594327088', dataNascimento: '1993-07-29'},
             {nome: 'Marcs Antonio de Almeida', cpf: '59062675069', dataNascimento: '2000-11-02'},
