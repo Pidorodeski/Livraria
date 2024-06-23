@@ -1,5 +1,9 @@
 import NaoEncontrado from "../erros/NaoEncontrado.js";
 import { usuario } from "../models/index.js";
+import bcrypt from 'bcryptjs';
+
+
+
 
 class UsuarioController {
     static listarUsuarios = async (req, res, next) =>{
@@ -42,14 +46,37 @@ class UsuarioController {
         }
     }
 
-    static cadastrarUsuario = async (req, res, next) =>{
+    static async cadastrarUsuario(req, res, next) {
         try {
-            const novoUsuario = await usuario.create(req.body);
-            res.status(201).json({message: "Usuário cadastrado com sucesso", usuario: novoUsuario});
+            const { nome, email, senha, cpf, dataNascimento } = req.body;
+            // Verifica se todos os campos necessários estão presentes
+            if (!(email && senha)) {
+                return res.status(400).json({ message: "Os campos de Email e Senha devem ser informados" });
+            }
+            
+            // Verifica o formato do email
+            const formatoEmailValido = await validarFormatoEmail(email);
+            if (!formatoEmailValido) {
+                return res.status(400).json({ message: "Formato de e-mail inválido" });
+            }
+    
+            // Verifica se o email já está cadastrado
+            const existeUsuario = await usuario.findOne({ email });
+            if (existeUsuario) {
+                return res.status(400).json({ message: "E-mail já inserido na base de dados" });
+            }
+
+            const hashSenha = await bcrypt.hash(senha, 10); // Gera o hash da senha com 10 salt rounds
+            const novoUsuario = await usuario.create({ nome, email, senha: hashSenha, cpf, dataNascimento });
+    
+            res.status(201).json({ message: "Usuário cadastrado com sucesso", usuario: novoUsuario });
+    
         } catch (error) {
             next(error);
         }
     }
+    
+    
 
     static editarUsuario = async (req, res, next) =>{
         try {
@@ -100,5 +127,12 @@ async function processaBusca(parametros) {
     if(cpf) busca.cpf = {$regex: cpf, $options: "i"};
     return busca;
 };
+
+async function validarFormatoEmail(email) {
+    // Regex para validar formato de email
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+}
+
 
 export default UsuarioController;
