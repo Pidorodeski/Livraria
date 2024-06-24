@@ -3,7 +3,6 @@ import mongoose from "mongoose";
 const perfilAcessoSchema = new mongoose.Schema(
     {
         nomePerfil: {type: String},
-        codigo: {type: Number},
         status: { type: String},
     },
     {
@@ -11,6 +10,6 @@ const perfilAcessoSchema = new mongoose.Schema(
     }
 );
 
-const perfil = mongoose.model("perfil", perfilAcessoSchema);
+const perfil = mongoose.model("perfis", perfilAcessoSchema);
 
 export default perfil;

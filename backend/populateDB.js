@@ -3,6 +3,8 @@ import "dotenv/config";
 import autores from './src/models/Autor.js';
 import livro from "./src/models/Livro.js";
 import usuario from "./src/models/Usuario.js";
+import perfil from "./src/models/PerfilAcesso.js";
+import bcrypt from 'bcryptjs';
 
 
 // Conectar-se ao banco de dados MongoDB
@@ -12,19 +14,28 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
 
         // Limpar as coleções
         await Promise.all([
+            perfil.deleteMany({}),
             usuario.deleteMany({}),
             autores.deleteMany({}),
             livro.deleteMany({})
         ]);
         console.log('Dados antigos removidos das coleções');
 
+        const perfilAcesso = [
+            {nomePerfil: 'admin', status: 1}
+        ]
+
+        // Inserir dados do perfil de acesso
+        const perfisInseridos = await perfil.insertMany(perfilAcesso);
+        console.log('Realizado insert dos dados de perfil sucesso');
+
+
+        const perfilId = perfisInseridos.map(perfil => perfil._id);
+
+        const hashSenha = await bcrypt.hash("123456", 10); // Gera o hash da senha com 10 salt rounds
+
         const dadosUsuarios = [
-            {nome: 'Cristian Rocha Pidorodeski', cpf: '45594327088', dataNascimento: '1993-07-29'},
-            {nome: 'Marcs Antonio de Almeida', cpf: '59062675069', dataNascimento: '2000-11-02'},
-            {nome: 'Felipe Wasmannd Rattova', cpf: '04472007045', dataNascimento: '1998-11-22'},
-            {nome: 'Paulo Paulinho Paulão', cpf: '00007497024', dataNascimento: '2002-12-15'},
-            {nome: 'Kenshin Himura Battousai', cpf: '24480370005', dataNascimento: '2005-06-30'},
-            {nome: 'Uzumaki Naruto', cpf: '31482363003', dataNascimento: '2010-01-02'},
+            {nome: 'Cristian Rocha Pidorodeski', email: "cristian.pidorodeski@outlook.com", senha: hashSenha, cpf: '45594327088', dataNascimento: '1993-07-29', perfil: perfilId},
         ]
 
         // Inserir os dados dos autores e capturar os IDs gerados

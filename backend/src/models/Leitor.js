@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const usuarioSchema = new mongoose.Schema(
+const leitorSchema = new mongoose.Schema(
     {
         nome: {
             type: String,
@@ -11,20 +11,14 @@ const usuarioSchema = new mongoose.Schema(
             required: [true, "Email é obrigatório"],
             unique: true
         },
-        senha: { type: String, required: true }, // A senha é obrigatória
         cpf: { type: String },
         dataNascimento: { type: Date },
-        perfil: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "perfil",
-            required: [true, "O perfil de acesso é obrigatório"]
-        }
     },
     {
         versionKey: false
     }
 );
 
-const usuario = mongoose.model("usuarios", usuarioSchema);
+const leitor = mongoose.model("leitor", leitorSchema);
 
-export default usuario;
+export default leitor;
