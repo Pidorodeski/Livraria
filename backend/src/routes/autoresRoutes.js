@@ -4,13 +4,11 @@ import paginar from "../middlewares/paginar.js";
 import Autenticado from "../middlewares/autenticado.js";
 
 const routes = express.Router();
-routes.use(Autenticado);
 
 routes.get("/autores", AutorController.listarAutores, paginar);
 routes.get("/autores/:id", AutorController.listarAutorPorId);
 routes.post("/autores", AutorController.cadastrarAutor);
 routes.put("/autores/:id", AutorController.editarAutor);
 routes.delete("/autores/:id", AutorController.deletarAutor);
-routes.delete("/deletar_autores", AutorController.specialDeleteAutores);
 
 export default routes;

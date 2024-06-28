@@ -4,6 +4,8 @@ import paginar from "../middlewares/paginar.js";
 import Autenticado from '../middlewares/autenticado.js'
 
 const routes = express.Router();
-routes.use(Autenticado);
 
-routes.get('/leitor', )
+routes.get("/leitor", LeitorController.listarLeitores, paginar);
+routes.post("/leitor", LeitorController.cadastrarLeitor)
+
+export default routes;

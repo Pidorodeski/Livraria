@@ -69,16 +69,6 @@ class AutorController {
       next(error);
     }
   }
-
-  static specialDeleteAutores = async (req, res, next) => {
-    try {
-      await autores.deleteMany({});
-      res.status(200).json({ message: "Todos os autores foram deletados" });
-    } catch (error) {
-      next(error);
-    }
-  }
-
 }
 
 export default AutorController;

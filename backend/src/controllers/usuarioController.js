@@ -1,9 +1,7 @@
 import NaoEncontrado from "../erros/NaoEncontrado.js";
 import { usuario } from "../models/index.js";
 import bcrypt from 'bcryptjs';
-
-
-
+import {processaBusca, validarFormatoEmail, validarCPF} from "../utils/validations.js"
 
 class UsuarioController {
     static listarUsuarios = async (req, res, next) =>{
@@ -60,6 +58,10 @@ class UsuarioController {
                 return res.status(400).json({ message: "Formato de e-mail inválido" });
             }
     
+            if (!validarCPF(cpf)) {
+                res.status(400).json({ message: "CPF inválido" });
+            }
+
             // Verifica se o email já está cadastrado
             const existeUsuario = await usuario.findOne({ email });
             if (existeUsuario) {
@@ -107,32 +109,6 @@ class UsuarioController {
             next(error);
         }
     }
-
-    static specialDeleteUsuarios = async (req, res, next) => {
-        try {
-            await usuario.deleteMany({});
-            res.status(200).json({message: "Todo os usuarios foram deletados"});
-        } catch (error) {
-            
-        }
-    }
 }
-
-async function processaBusca(parametros) {
-    const {nome, cpf} = parametros;
-
-    let busca = {};
-
-    if(nome) busca.nome = {$regex: nome, $options: "i"};
-    if(cpf) busca.cpf = {$regex: cpf, $options: "i"};
-    return busca;
-};
-
-async function validarFormatoEmail(email) {
-    // Regex para validar formato de email
-    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return re.test(email);
-}
-
 
 export default UsuarioController;

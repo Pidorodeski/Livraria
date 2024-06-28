@@ -1,5 +1,6 @@
 import NaoEncontrado from "../erros/NaoEncontrado.js";
-import {autores, livro} from "../models/index.js";
+import {livro} from "../models/index.js";
+import {processaBusca} from "../utils/validations.js"
 
 class LivroController {
 
@@ -53,7 +54,7 @@ class LivroController {
     static async cadastrarLivros(req, res, next){
         try {
             const novoLivro = await livro.create(req.body);
-            res.status(201).json({ message: "cadastrado com sucesso", livro: novoLivro });
+            res.status(201).json({ message: "Livro cadastrado com sucesso", livro: novoLivro });
         }   catch (error){
             next(error);
         }
@@ -88,34 +89,6 @@ class LivroController {
             next(error);
         }
     }
-
-    static specialDeleteLivros = async (req, res, next) => {
-        try {
-          await livro.deleteMany({});
-          res.status(200).json({ message: "Todos os livros foram deletados" });
-        } catch (error) {
-          next(error);
-        }
-      }
-};
-
-async function processaBusca(parametros) {
-    const {titulo, editora, nomeAutor} = parametros;
-
-    let busca = {};
-
-    if(titulo) busca.titulo = {$regex: titulo, $options: "i"};
-    if(editora) busca.editora = {$regex: editora, $options: "i"};
-    if(nomeAutor){
-        const autor = await autores.findOne({nome: nomeAutor});
-        if (autor !== null) {
-            busca.autor = autor._id;
-        } else {
-            busca = null;
-        }
-        
-    }
-    return busca;
 };
 
 export default LivroController;
