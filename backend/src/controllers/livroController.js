@@ -6,7 +6,7 @@ class LivroController {
 
     static listarLivros = async (req, res, next) => {
         try {
-            const buscaLivros = livro.find().populate("autor");;
+            const buscaLivros = livro.find().populate("autor");
             req.resultado = buscaLivros;
             next();
 

@@ -5,7 +5,7 @@ const { sign } = jwt;
 import { usuario } from "../models/index.js";
 import jsonSecret from '../config/jsonSecret.js';
 
-const expirationTime = 360;
+const expirationTime = 30000;
 
 class AuthController {
     static authLogin = async(req, res, next) =>{

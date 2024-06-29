@@ -12,7 +12,6 @@ export function processaBusca(parametros) {
         } else {
             busca = null;
         }
-        
     }
     return busca;
 };

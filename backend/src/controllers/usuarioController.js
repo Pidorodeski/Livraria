@@ -29,21 +29,6 @@ class UsuarioController {
         }
     }
 
-    static listarUsuarioPorFiltro = async (req, res, next) =>{
-        try {
-            const busca = await processaBusca(req.query);
-            if(busca !== null){
-                const usuarioResultado = usuario
-                    .find(busca);
-
-                req.resultado = usuarioResultado;
-                next();
-            } else (res.status(200).send([]))
-        } catch (error) {
-            next(error);
-        }
-    }
-
     static async cadastrarUsuario(req, res, next) {
         try {
             const { nome, email, senha, cpf, dataNascimento } = req.body;
@@ -59,7 +44,7 @@ class UsuarioController {
             }
     
             if (!validarCPF(cpf)) {
-                res.status(400).json({ message: "CPF inválido" });
+                return res.status(400).json({ message: "CPF inválido" });
             }
 
             // Verifica se o email já está cadastrado
@@ -77,7 +62,6 @@ class UsuarioController {
             next(error);
         }
     }
-    
     
 
     static editarUsuario = async (req, res, next) =>{
