@@ -18,7 +18,6 @@ class PerfilAcesso {
             const validaNome = await perfil.findOne({nomePerfil});
             if(validaNome){
                 return res.status(400).json({message: "Nome inserido já cadastrado!"});
-
             }
 
             const validaStatus = await perfil.findOne({status});

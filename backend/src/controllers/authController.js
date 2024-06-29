@@ -11,6 +11,7 @@ class AuthController {
     static authLogin = async(req, res, next) =>{
         try {
             const {email, senha } = req.body;
+            
             const usuarioLogin = await usuario.findOne({email: email})
             if (!usuarioLogin){
                 return res.status(400).json({ message: "Usuario nao cadastrado" });

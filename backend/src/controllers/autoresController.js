@@ -31,30 +31,55 @@ class AutorController {
 
   static cadastrarAutor = async (req, res, next) => {
     try {
-      let autor = new autores(req.body);
-      const autorResultado = await autor.save();
+      const {nome, nacionalidade} = req.body;
 
-      res.status(201).send(autorResultado.toJSON());
+      const validaNome = await autores.findOne({nome});
+      if(validaNome){
+        return res.status(400).json({message: "Nome inserido já cadastrado!"});
+      }
+
+      const novoAutor = await autores.create({nome, nacionalidade});
+      res.status(201).json({message: "Autor cadastrado com sucesso", autores: novoAutor});
     } catch (erro) {
       next(erro);
     }
   };
 
-  static editarAutor = async (req, res, next) => {
-    try {
-      const id = req.params.id;
-      const idResultado = await autores.findByIdAndUpdate(id, {$set: req.body});
+static editarAutor = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const { nome } = req.body;
 
-      if (idResultado !== null) {
-        res.status(200).send({message: "Livro atualizado com sucesso"});
+    const usuarioBuscaNome = await autores.findOne({nome});
+    const usuarioBuscaId = await autores.findById(id);
+
+    if (!usuarioBuscaId) {
+      return next(new NaoEncontrado("Id do autor não localizado."));
+    }
+
+    // Se nao foi passado o nome no put
+    if (!nome){
+      const autorEditado = await autores.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+      res.status(200).json({message: "Autor editado com sucesso!", autores: autorEditado})
+    
+    // Se o nome autor passado nao existir na base
+    } else if (!usuarioBuscaNome) {
+      const autorEditado = await autores.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+      res.status(200).json({message: "Autor editado com sucesso!", autores: autorEditado})
+    
+    // Se o nome passado no put for igual ao nome 
+    } else if (usuarioBuscaNome.id === usuarioBuscaId.id && usuarioBuscaNome.nome === usuarioBuscaId.nome){
+      const autorEditado = await autores.findByIdAndUpdate(id, { $set: req.body }, { new: true });
+      res.status(200).json({message: "Autor editado com sucesso!", autores: autorEditado})
     } else {
-        next(new NaoEncontrado("Id do autor não localizado."));
+      res.status(400).json({message: "Nome editado já inserido na base"})
     }
-    } catch (error) {
-      next(error);
-    }
+  } catch (error) {
+    next(error);
   }
+}
 
+  
   static deletarAutor = async (req, res, next) => {
     try {
       const id = req.params.id;
