@@ -1,9 +1,6 @@
 import bcrypt from 'bcryptjs';
-const { compare } = bcrypt;
 import jwt from 'jsonwebtoken';
-const { sign, verify, decode } = jwt;
-import { usuario } from "../models/index.js";
-import jsonSecret from '../config/jsonSecret.js';
+const { verify, decode } = jwt;
 
 async function Autenticado(req, res, next) {
     const token = req.headers.authorization;
@@ -15,7 +12,7 @@ async function Autenticado(req, res, next) {
     const [, accessToken] = token.split(" ");
 
     try {
-        verify(accessToken, jsonSecret.secret);
+        verify(accessToken, process.env.SECRET);
 
         const decoded = decode(accessToken); 
         req.usuarioEmail = decoded.email;

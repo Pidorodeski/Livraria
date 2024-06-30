@@ -3,7 +3,6 @@ const { compare } = bcrypt;
 import jwt from 'jsonwebtoken';
 const { sign } = jwt;
 import { usuario } from "../models/index.js";
-import jsonSecret from '../config/jsonSecret.js';
 
 const expirationTime = 30000;
 
@@ -25,7 +24,7 @@ class AuthController {
             const accessToken = sign({
                 id: usuario.id,
                 email: usuario.email
-            }, jsonSecret.secret, {
+            }, process.env.SECRET, {
                 expiresIn: expirationTime
             })
             return res.json({ accessToken, expirationTime });
