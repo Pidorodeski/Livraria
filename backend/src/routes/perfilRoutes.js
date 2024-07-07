@@ -5,6 +5,6 @@ import paginar from "../middlewares/paginar.js";
 const routes = express.Router();
 
 routes.get("/perfil", PerfilAcesso.listarPerfil, paginar);
-routes.post("/perfil", PerfilAcesso.cadastrarPerfil);
+routes.get("/perfil/:id", PerfilAcesso.listarPerfilPorId);
 
 export default routes;

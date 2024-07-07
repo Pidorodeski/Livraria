@@ -44,8 +44,6 @@ class LivroController {
             } else {
                 res.status(200).send([]);
             }
-
-            
         } catch (error) {
             next(error);
         };

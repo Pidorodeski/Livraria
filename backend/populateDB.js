@@ -4,6 +4,9 @@ import autores from './src/models/Autor.js';
 import livro from "./src/models/Livro.js";
 import usuario from "./src/models/Usuario.js";
 import perfil from "./src/models/PerfilAcesso.js";
+import permissao from "./src/models/Permissao.js";
+import emprestimo from "./src/models/Emprestimo.js";
+import leitor from "./src/models/Leitor.js";
 import bcrypt from 'bcryptjs';
 
 
@@ -14,15 +17,19 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
 
         // Limpar as coleções
         await Promise.all([
+            autores.deleteMany({}),
+            emprestimo.deleteMany({}),
+            leitor.deleteMany({}),
+            livro.deleteMany({}),
             perfil.deleteMany({}),
             usuario.deleteMany({}),
-            autores.deleteMany({}),
-            livro.deleteMany({})
+            permissao.deleteMany({})
         ]);
         console.log('Dados antigos removidos das coleções');
 
         const perfilAcesso = [
-            {nomePerfil: 'admin', status: 1}
+            {nomePerfil: 'admin', status: 1},
+            {nomePerfil: 'gestor', status: 2},
         ]
 
         // Inserir dados do perfil de acesso
@@ -32,16 +39,52 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
 
         const perfilId = perfisInseridos.map(perfil => perfil._id);
 
-        const hashSenha = await bcrypt.hash("123456", 10); // Gera o hash da senha com 10 salt rounds
+        const adminPerfil = perfisInseridos.find(perfil => perfil.nomePerfil === 'admin');
+        const gestorPerfil = perfisInseridos.find(perfil => perfil.nomePerfil === 'gestor');
+
+
+        const hashSenha1 = await bcrypt.hash("123456", 10); // Gera o hash da senha com 10 salt rounds
+        const hashSenha2 = await bcrypt.hash("123321", 10); // Gera o hash da senha com 10 salt rounds
 
         const dadosUsuarios = [
-            {nome: 'Cristian Rocha Pidorodeski', email: "cristian.pidorodeski@outlook.com", senha: hashSenha, cpf: '45594327088', dataNascimento: '1993-07-29', perfil: perfilId},
+            {nome: 'Cristian Rocha Pidorodeski', email: "cristian.pidorodeski@outlook.com", senha: hashSenha1, cpf: '08628621911', dataNascimento: '1993-07-29', perfil: adminPerfil.id},
+            {nome: 'Daniela Ferreira Oliveira', email: "daniela.ferreira@outlook.com", senha: hashSenha2, cpf: '08792916996', dataNascimento: '1993-07-29', perfil: gestorPerfil.id},
         ]
 
         // Inserir os dados dos autores e capturar os IDs gerados
         await usuario.insertMany(dadosUsuarios);
         console.log('Realizado insert dos dados de usuário com sucesso');
 
+        // Inserir os dados das permissões
+        const permissoes = [
+            {
+                perfil: adminPerfil._id,
+                recursos: [
+                    { nomeRecurso: "autor", acoes: { get: true, post: true, put: true, delete: true } },
+                    { nomeRecurso: "livro", acoes: { get: true, post: true, put: true, delete: true } },
+                    { nomeRecurso: "leitor", acoes: { get: true, post: true, put: true, delete: true } },
+                    { nomeRecurso: "usuario", acoes: { get: true, post: true, put: true, delete: true } },
+                    { nomeRecurso: "perfil", acoes: { get: true, post: true, put: true, delete: true } },
+                    { nomeRecurso: "emprestimo", acoes: { get: true, post: true, put: true, delete: true } }
+                ]
+            },
+            {
+                perfil: gestorPerfil._id,
+                recursos: [
+                    { nomeRecurso: "autor", acoes: { get: true, post: false, put: false, delete: false } },
+                    { nomeRecurso: "livro", acoes: { get: true, post: false, put: false, delete: false } },
+                    { nomeRecurso: "leitor", acoes: { get: true, post: false, put: false, delete: false } },
+                    { nomeRecurso: "usuario", acoes: { get: true, post: false, put: false, delete: false } },
+                    { nomeRecurso: "perfil", acoes: { get: true, post: false, put: false, delete: false } },
+                    { nomeRecurso: "emprestimo", acoes: { get: true, post: false, put: false, delete: false } }
+
+                ]
+            }
+        ];
+
+        // Inserir permissões
+        await permissao.insertMany(permissoes);
+        console.log('Realizado insert dos dados de permissões com sucesso');
 
 
         // Array de dados a serem inseridos

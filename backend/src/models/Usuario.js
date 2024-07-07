@@ -16,7 +16,7 @@ const usuarioSchema = new mongoose.Schema(
         dataNascimento: { type: Date },
         perfil: {
             type: mongoose.Schema.Types.ObjectId,
-            ref: "perfil",
+            ref: "perfis",
             required: [true, "O perfil de acesso é obrigatório"]
         }
     },
