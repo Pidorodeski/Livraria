@@ -1,8 +1,11 @@
-import { usuario, perfil } from "../models/index.js";
+import { usuario, permissao} from "../models/index.js";
+import { possuiPermissaoValidacao } from "../utils/validations.js";
 
 const roles = (listaRoles) => {
     return async (req, res, next) => {
         const { usuarioId } = req;
+        const recursoNome = req.originalUrl.split('/').slice(1)[0];
+        const metodoRequisicao = req.method.toLowerCase();
 
         try {
             const user = await usuario.findById(usuarioId).populate('perfil');
@@ -13,7 +16,16 @@ const roles = (listaRoles) => {
                 return res.status(401).send(`Usuario ${roleNome} não possui acesso a esta funcionalidade`);
             }
 
-            return next();
+            const permissaoId = await permissao.findOne({perfil: user.perfil._id});
+            const recursoLivro = permissaoId.recursos.find(recurso => recurso.nomeRecurso === recursoNome);
+            const permissaoRegras = recursoLivro ? recursoLivro.acoes : [];
+
+            const possuiPermissao = possuiPermissaoValidacao(permissaoRegras, metodoRequisicao);
+            if(possuiPermissao){
+                return next();
+            } else {
+                return res.status(401).send(`Usuario ${roleNome} não possui acesso a rota ${metodoRequisicao}`);
+            }
         } catch (error) {
             next(error);
         }       

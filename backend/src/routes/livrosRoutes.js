@@ -7,11 +7,11 @@ import autenticado from "../middlewares/autenticado.js";
 const routes = express.Router();
 routes.use(autenticado)
 
-routes.get("/livro", perfil(["admin"]), LivroController.listarLivros, paginar);
-routes.get("/livro/busca", LivroController.listarLivroPorFiltro, paginar)
-routes.get("/livro/:id", LivroController.listarLivroPorId);
-routes.put("/livro/:id", LivroController.atualizarLivros);
-routes.post("/livro", LivroController.cadastrarLivros);
-routes.delete("/livro/:id", LivroController.deletarLivro);
+routes.get("/livro", perfil(["admin", "gestor"]), LivroController.listarLivros, paginar);
+routes.get("/livro/busca", perfil(["admin", "gestor"]), LivroController.listarLivroPorFiltro, paginar)
+routes.get("/livro/:id", perfil(["admin", "gestor"]), LivroController.listarLivroPorId);
+routes.put("/livro/:id", perfil(["admin", "gestor"]), LivroController.atualizarLivros);
+routes.post("/livro", perfil(["admin", "gestor"]), LivroController.cadastrarLivros);
+routes.delete("/livro/:id", perfil(["admin", "gestor"]), LivroController.deletarLivro);
 
 export default routes;

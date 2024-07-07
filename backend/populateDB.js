@@ -65,7 +65,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                     { nomeRecurso: "leitor", acoes: { get: true, post: true, put: true, delete: true } },
                     { nomeRecurso: "usuario", acoes: { get: true, post: true, put: true, delete: true } },
                     { nomeRecurso: "perfil", acoes: { get: true, post: true, put: true, delete: true } },
-                    { nomeRecurso: "emprestimo", acoes: { get: true, post: true, put: true, delete: true } }
+                    { nomeRecurso: "emprestimo", acoes: { get: true, post: true, put: true, delete: true } },
+                    { nomeRecurso: "permissao", acoes: { get: true, post: true, put: true, delete: true } },
                 ]
             },
             {
@@ -76,7 +77,8 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
                     { nomeRecurso: "leitor", acoes: { get: true, post: false, put: false, delete: false } },
                     { nomeRecurso: "usuario", acoes: { get: true, post: false, put: false, delete: false } },
                     { nomeRecurso: "perfil", acoes: { get: true, post: false, put: false, delete: false } },
-                    { nomeRecurso: "emprestimo", acoes: { get: true, post: false, put: false, delete: false } }
+                    { nomeRecurso: "emprestimo", acoes: { get: true, post: false, put: false, delete: false } },
+                    { nomeRecurso: "permissao", acoes: { get: false, post: false, put: false, delete: false } },
 
                 ]
             }
