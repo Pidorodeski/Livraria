@@ -12,16 +12,41 @@ class LeitorController {
         }
     }
 
+    static listarLeitorPorId = async (req, res, next) => {
+        try {
+            const id = req.params.id;
+            const idResultado = await leitor.findById(id);
+
+            if (idResultado !== null){
+                res.status(200).send(idResultado);
+            } else {
+                next(new NaoEncontrado("Id do Leitor nao encontrado"))
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
     static cadastrarLeitor = async (req, res, next) => {
         try {
             const {nome, email, cpf, dataNascimento} = req.body;
 
             if (!validarFormatoEmail(email)) {
-                res.status(400).json({ message: "Formato de e-mail inválido" });
+                return res.status(400).json({ message: "Formato de e-mail inválido" });
+            }
+
+            const validaExisteNome = await leitor.findOne({email});
+            if (validaExisteNome){
+                return res.status(400).json({message: "E-mail já inserido na base!"});
             }
 
             if (!validarCPF(cpf)) {
-                res.status(400).json({ message: "CPF inválido" });
+                return res.status(400).json({ message: "CPF inválido" });
+            }
+
+            const validaExisteCPF = await leitor.findOne({cpf});
+            if (validaExisteCPF){
+                return res.status(400).json({message: "CPF informado já inserido na base!"})
             }
 
             const novoLeitor = await leitor.create({ nome, email, cpf, dataNascimento });
@@ -37,16 +62,31 @@ class LeitorController {
             const {nome, email, cpf, dataNascimento} = req.body;
 
             if (email){
-                return res.status(400).send({message: "Email não pode ser alterado!"})
+                return res.status(400).json({message: "E-mail não pode ser alterado"})
             }
 
-            const idResultado = await leitor.findByIdAndUpdate(id, {$set: req.body});
-
+            const idResultado = await leitor.findByIdAndUpdate(id, {$set: req.body}, { new: true });
             if (idResultado !== null) {
                 res.status(200).send({message: "Leitor atualizado com sucesso"});
             } else {
                 next(new NaoEncontrado("Id do leitor não localizado."));
             }
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static deletarLeitor = async (req, res, next) => {
+        try {
+            const id = req.params.id
+            const idResultado = await leitor.findByIdAndDelete(id);
+
+            if (idResultado !== null) {
+                res.status(200).send({message: "Leitor deletado com sucesso"});
+            } else {
+                next(new NaoEncontrado("Id do leitor não localizado."));
+            }
+
         } catch (error) {
             next(error);
         }

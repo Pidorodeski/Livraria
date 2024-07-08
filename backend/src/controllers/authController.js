@@ -9,9 +9,9 @@ const expirationTime = 30000;
 class AuthController {
     static authLogin = async(req, res, next) =>{
         try {
-            const {email, senha } = req.body;
-            
+            const { email, senha } = req.body;
             const usuarioLogin = await usuario.findOne({email: email})
+
             if (!usuarioLogin){
                 return res.status(400).json({ message: "Usuario nao cadastrado" });
             }
@@ -22,11 +22,12 @@ class AuthController {
             }
 
             const accessToken = sign({
-                id: usuario.id,
-                email: usuario.email
+                id: usuarioLogin._id,
+                email: usuarioLogin.email
             }, process.env.SECRET, {
                 expiresIn: expirationTime
             })
+            
             return res.json({ accessToken, expirationTime });
 
         } catch (error) {

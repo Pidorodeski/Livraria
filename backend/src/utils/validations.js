@@ -16,6 +16,10 @@ export function processaBusca(parametros) {
     return busca;
 };
 
+export function possuiPermissaoValidacao(metodos, metodoRequisicao) {
+    return metodos[metodoRequisicao];
+}
+
 export function validarFormatoEmail(email) {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(email);

@@ -1,7 +1,7 @@
 import NaoEncontrado from "../erros/NaoEncontrado.js";
 import { usuario } from "../models/index.js";
 import bcrypt from 'bcryptjs';
-import {processaBusca, validarFormatoEmail, validarCPF} from "../utils/validations.js"
+import {validarFormatoEmail, validarCPF} from "../utils/validations.js"
 
 class UsuarioController {
     static listarUsuarios = async (req, res, next) =>{
