@@ -1,26 +1,21 @@
-import bcrypt from 'bcryptjs';
-import jwt from 'jsonwebtoken';
-const { verify, decode } = jwt;
+import pkg from 'jsonwebtoken';
+const { verify, decode } = pkg;
 
-async function Autenticado(req, res, next) {
+const autenticado = async (req, res, next) => {
     const token = req.headers.authorization;
-
     if (!token) {
-        return res.status(401).send({ message: "Token nao informado" });
+        return res.status(401).send('Access token não informado');
     }
-
     const [, accessToken] = token.split(" ");
-
     try {
         verify(accessToken, process.env.SECRET);
-
-        const decoded = decode(accessToken); 
-        req.usuarioEmail = decoded.email;
-
-        next();
+        const { id, email } = decode(accessToken);
+        req.usuarioId = id;
+        req.usuarioEmail = email;
+        return next();
     } catch (error) {
-        res.status(401).send({ message: "Usuario nao autorizado" });
+        return res.status(401).send('Usuário não autorizado');
     }
 }
 
-export default Autenticado;
+export default autenticado;
