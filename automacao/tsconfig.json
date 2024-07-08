@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+      "allowSyntheticDefaultImports": true,
+      "allowJs": true,
+      "noEmit": true,
+      "baseUrl": ".",
+      "target": "ES6",
+      "module": "CommonJS",
+      "esModuleInterop": true,
+      "strict": true,
+      "declaration": true,
+      "declarationMap": true,    
+      "lib": ["ES6", "dom"],
+      "skipLibCheck": true,
+      "forceConsistentCasingInFileNames": true,
+      "resolveJsonModule": true,
+      "types": ["node", "cypress", "cypress-file-upload"],
+      "paths": {
+        "@badeball/cypress-cucumber-preprocessor/*": ["./node_modules/@badeball/cypress-cucumber-preprocessor/dist/subpath-entrypoints/*"]
+      }
+    },
+    "include": ["**/*.ts", "report/utils/multiple-cucumber-html-reporter.js", "cypress.config.ts", "../node_modules/cypress-file-upload", "cypress/support/commands.js"],
+    "exclude": ["node_modules"],
+    "platform": "node"
+  }
+  

@@ -67,8 +67,13 @@ class UsuarioController {
     static editarUsuario = async (req, res, next) =>{
         try {
             const id = req.params.id;
-            const idResultado = await usuario.findByIdAndUpdate(id, {$set: req.body});
+            const { nome, email, senha, cpf, dataNascimento } = req.body;
 
+            if (email){
+                return res.status(400).send({message: "Email não pode ser alterado!"})
+            }
+
+            const idResultado = await usuario.findByIdAndUpdate(id, {$set: req.body});
             if (idResultado !== null){
                 res.status(200).send({message: "Usuario atualizado com sucesso"})
             } else {

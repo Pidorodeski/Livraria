@@ -34,6 +34,12 @@ class LeitorController {
     static editarLeitor = async (req, res, next) => {
         try {
             const id = req.params.id;
+            const {nome, email, cpf, dataNascimento} = req.body;
+
+            if (email){
+                return res.status(400).send({message: "Email não pode ser alterado!"})
+            }
+
             const idResultado = await leitor.findByIdAndUpdate(id, {$set: req.body});
 
             if (idResultado !== null) {
