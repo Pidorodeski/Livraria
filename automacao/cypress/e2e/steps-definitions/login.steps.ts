@@ -1,9 +1,9 @@
 import { Given, When, Then, DataTable } from '@badeball/cypress-cucumber-preprocessor';
+import { PostResult } from './models/post-result';
 
 const url = `${Cypress.env('apiUrl')}/auth/login`;
 
 export function login(perfil: string): void {
-    let email, password;
     cy.fixture('auth').then((authData) => {
         let email, password;
 
@@ -25,15 +25,30 @@ export function login(perfil: string): void {
                 email: email,
                 senha: password
             }
-        }).then((token) =>{
-            console.log(token);
-            
-            //Cypress.env('JWTToken', token.body.a)
+        }).as('login').then((token) =>{
+            Cypress.env('JWTToken', token.body.accessToken)
         })
     });
   }
 
 Given('Eu faça a autenticação com as credenciais de {string}', (perfil: string) => {
-    login(perfil)
-    return true
+    login(perfil)       
+});
+
+Then('Verifico se o retorno do login é o código {string}', (code: string) => {
+    cy.get<Cypress.Response<any>>("@login").then((response) => {
+        expect(response.status).eq(+code)
+    })
+});
+
+Given('Eu faca a autenticação com o email {string} e senha {string}', (email: string, password: string) => {
+    cy.request({
+        method: 'POST',
+        url,
+        failOnStatusCode: false,
+        body: {
+            email: email,
+            senha: password
+        }
+    }).as('login')
 });
