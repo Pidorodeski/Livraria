@@ -7,9 +7,6 @@ const roles = (listaRoles) => {
         const recursoNome = req.originalUrl.split('?')[0].split('/').slice(1)[0];
         const metodoRequisicao = req.method.toLowerCase();
 
-        console.log(`Nome da Rota: ${recursoNome}`);
-        console.log(`Tipo da rota: ${metodoRequisicao}`);
-
         try {
             const user = await usuario.findById(usuarioId).populate('perfil');
             const roleNome = user.perfil.nomePerfil;
