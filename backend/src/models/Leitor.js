@@ -19,6 +19,6 @@ const leitorSchema = new mongoose.Schema(
     }
 );
 
-const leitor = mongoose.model("leitor", leitorSchema);
+const leitor = mongoose.model("leitores", leitorSchema);
 
 export default leitor;
