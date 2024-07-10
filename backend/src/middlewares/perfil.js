@@ -4,7 +4,7 @@ import { possuiPermissaoValidacao } from "../utils/validations.js";
 const roles = (listaRoles) => {
     return async (req, res, next) => {
         const { usuarioId } = req;
-        const recursoNome = req.originalUrl.split('?')[0].split('/').slice(1)[0];
+        const rotaNome = req.originalUrl.split('?')[0].split('/').slice(1)[0];
         const metodoRequisicao = req.method.toLowerCase();
 
         try {
@@ -17,8 +17,8 @@ const roles = (listaRoles) => {
             }
 
             const permissaoId = await permissao.findOne({perfil: user.perfil._id});
-            const recursoLivro = permissaoId.recursos.find(recurso => recurso.nomeRecurso === recursoNome);
-            const permissaoRegras = recursoLivro ? recursoLivro.acoes : [];
+            const recursoAcoes = permissaoId.recursos.find(recurso => recurso.nomeRecurso === rotaNome);
+            const permissaoRegras = recursoAcoes ? recursoAcoes.acoes : [];
 
             const possuiPermissao = possuiPermissaoValidacao(permissaoRegras, metodoRequisicao);
             if(possuiPermissao){

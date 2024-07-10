@@ -8,8 +8,6 @@ before (() =>{
     cy.dropCollection('autores');
     cy.dropCollection('emprestimos');
     cy.dropCollection('leitores');
-    //cy.dropCollection('permissoes');
-    //cy.dropCollection('usuarios');
 })
 
 Before({tags: '@loginAdmin'}, () =>{
