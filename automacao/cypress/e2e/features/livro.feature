@@ -4,4 +4,3 @@ Feature: Teste da funcionalidade de Livros
     @loginAdmin
     Scenario: Listar os livros com perfil de Administrador
         Given Eu realize uma requisição para listar os livros
-        Then 

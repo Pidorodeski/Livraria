@@ -1,9 +1,10 @@
-import { Before } from "@badeball/cypress-cucumber-preprocessor";
+import { Before } from '@badeball/cypress-cucumber-preprocessor';
 
 const url = `${Cypress.env('apiUrl')}/auth/login`;
 
-Before(() =>{
-   cy.log("Oi, eu sou o before")
+before (() =>{
+    cy.log("Oi, eu sou o before")
+
 })
 
 Before({tags: '@loginAdmin'}, () =>{
@@ -22,4 +23,10 @@ Before({tags: '@loginAdmin'}, () =>{
             Cypress.env('JWTAdminToken', token.body.accessToken)
         })
     });
+})
+
+
+Before({tags: '@dropDatabase'}, () =>{
+    cy.dropCollection('livros');
+    
 })
