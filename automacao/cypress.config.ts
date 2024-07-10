@@ -25,8 +25,8 @@ export default defineConfig({
     mongodb: {
       uri: 'mongodb+srv://admin:admin1234@cluster0.rn6zj2i.mongodb.net/livraria?retryWrites=true&w=majority&appName=Cluster0',
       database: 'livraria',
-      collection: 'livros'
-  },
+      collections: ['livros', 'autores', 'emprestimos', 'leitores', 'perfis', 'permissoes', 'usuarios']
+    },
     apiUrl: 'http://localhost:3000',
   },
   e2e: {

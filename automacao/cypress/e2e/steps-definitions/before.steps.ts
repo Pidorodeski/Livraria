@@ -4,7 +4,12 @@ const url = `${Cypress.env('apiUrl')}/auth/login`;
 
 before (() =>{
     cy.log("Oi, eu sou o before")
-
+    cy.dropCollection('livros');
+    cy.dropCollection('autores');
+    cy.dropCollection('emprestimos');
+    cy.dropCollection('leitores');
+    //cy.dropCollection('permissoes');
+    //cy.dropCollection('usuarios');
 })
 
 Before({tags: '@loginAdmin'}, () =>{
@@ -27,6 +32,5 @@ Before({tags: '@loginAdmin'}, () =>{
 
 
 Before({tags: '@dropDatabase'}, () =>{
-    cy.dropCollection('livros');
-    
+    cy.dropCollection('livros', 'autores');
 })
