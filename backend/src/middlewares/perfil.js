@@ -13,7 +13,7 @@ const roles = (listaRoles) => {
             const rolesCadastradas = listaRoles.includes(roleNome);
 
             if (!rolesCadastradas) {
-                return res.status(401).send(`Usuario ${roleNome} não possui acesso a esta funcionalidade`);
+                return res.status(401).json({ message: `Usuario ${roleNome} não possui acesso a esta funcionalidade`});
             }
 
             const permissaoId = await permissao.findOne({perfil: user.perfil._id});
@@ -24,7 +24,7 @@ const roles = (listaRoles) => {
             if(possuiPermissao){
                 return next();
             } else {
-                return res.status(401).send(`Usuario ${roleNome} não possui acesso a rota ${metodoRequisicao}`);
+                return res.status(401).json({ message: `Usuario ${roleNome} não possui acesso a rota ${metodoRequisicao}`});
             }
         } catch (error) {
             next(error);

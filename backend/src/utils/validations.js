@@ -1,20 +1,22 @@
-export function processaBusca(parametros) {
-    const {titulo, editora, nomeAutor} = parametros;
+import { autores } from "../models/index.js";
 
+export async function processaBusca (parametros) {
+
+    const  { editora, titulo, nomeAutor } = parametros;
     let busca = {};
-
-    if(titulo) busca.titulo = {$regex: titulo, $options: "i"};
-    if(editora) busca.editora = {$regex: editora, $options: "i"};
-    if(nomeAutor){
-        const autor = autores.findOne({nome: nomeAutor});
-        if (autor !== null) {
-            busca.autor = autor._id;
-        } else {
-            busca = null;
-        }
+    if (editora) busca.editora = { $regex: editora, $options: "i" };
+    if (titulo) busca.titulo   = { $regex: titulo, $options: "i" };
+    if (nomeAutor) {    
+      const autor = await autores.findOne({ nome: nomeAutor });
+      if (autor !== null) {
+        busca.autor = autor._id;
+      } else {
+        busca = null;
+      }
     }
+  
     return busca;
-};
+  }
 
 export function possuiPermissaoValidacao(metodos, metodoRequisicao) {
     return metodos[metodoRequisicao];

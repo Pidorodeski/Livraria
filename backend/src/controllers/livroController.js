@@ -33,14 +33,10 @@ class LivroController {
     static listarLivroPorFiltro = async (req, res, next) => {
         try {
             const busca = await processaBusca(req.query);
-
             if (busca !== null) {
-                const livroResultado = livro
-                .find(busca)
-                .populate("autor");
-
-            req.resultado = livroResultado;
-            next();
+                const livroResultado = livro.find(busca).populate("autor");
+                req.resultado = livroResultado;
+                next();
             } else {
                 res.status(200).send([]);
             }
@@ -61,10 +57,10 @@ class LivroController {
     static async atualizarLivros (req, res, next){
         try {
             const id = req.params.id;
-            const idResultado = await livro.findByIdAndUpdate(id, {$set: req.body});
+            const livroAlterado = await livro.findByIdAndUpdate(id, {$set: req.body}, { new: true });
 
-            if (idResultado !== null) {
-                res.status(200).send({message: "Livro atualizado com sucesso"});
+            if (livroAlterado !== null) {
+                res.status(200).send({message: "Livro atualizado com sucesso", livro: livroAlterado});
             } else {
                 next(new NaoEncontrado("Id do livro não localizado."));
             }
