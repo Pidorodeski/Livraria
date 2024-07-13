@@ -6,12 +6,10 @@ const emprestimoSchema = new mongoose.Schema(
         livro:{
             type: mongoose.Schema.Types.ObjectId,
             ref: "livros",
-            required: [true, "O id do livro é obrigatório"]
         },
         usuario: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "usuarios",
-            required: [true, "O id do usuario é obrigatório"]
         },
         dataEmprestimo: {
             type: Date,
@@ -19,8 +17,7 @@ const emprestimoSchema = new mongoose.Schema(
             required: true
           },
           dataDevolucao: {
-            type: Date,
-            required: [true, "A data de devolução é obrigatória"]
+            type: Date
           },
           devolvido: {
             type: Boolean,
