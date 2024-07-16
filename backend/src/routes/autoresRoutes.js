@@ -8,6 +8,7 @@ const routes = express.Router();
 routes.use(autenticado)
 
 routes.get("/autor", perfil(["admin", "gestor"]), AutorController.listarAutores, paginar);
+routes.get("/autor/busca", perfil(["admin", "gestor"]), AutorController.listarAutoresPorFiltro, paginar)
 routes.get("/autor/:id", perfil(["admin", "gestor"]), AutorController.listarAutorPorId);
 routes.post("/autor", perfil(["admin", "gestor"]), AutorController.cadastrarAutor);
 routes.put("/autor/:id", perfil(["admin", "gestor"]), AutorController.editarAutor);

@@ -5,6 +5,6 @@ import paginar from "../middlewares/paginar.js"
 const routes = express.Router();
 
 routes.get("/emprestimo", EmprestimoController.listarEmprestimos, paginar);
-routes.post("/emprestimo/:idLivro/:idUsuario", EmprestimoController.realizarEmprestimo);
+routes.post("/emprestimo", EmprestimoController.realizarEmprestimo);
 
 export default routes;

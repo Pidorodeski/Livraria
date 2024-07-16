@@ -1,5 +1,5 @@
 Feature: Teste da funcionalidade de Livros
-    Eu, como usuário, realizar a listagem, alteração e cadastro de livros pela API
+    Eu, como usuário, quero realizar a listagem, alteração deleção e cadastro de livros pela API
 
     @loginAdmin @needBooks
     Scenario: Cadastrar livro com perfil de Administrador
@@ -15,7 +15,7 @@ Feature: Teste da funcionalidade de Livros
 
     Scenario: Listar os livros com perfil de Administrador
         Given Eu realize uma requisição para listar os livros
-        Then Verifico se a listagem da requisição dos livros é de "5"
+        Then Verifico se a listagem da requisição de "book" é de "5"
 
     Scenario Outline: Listar os livros por filtro "<filter>" com perfil de Administrador
         Given Eu realize uma requisicao para listar o livro pelo filtro "<filter>" com o valor "<value>"
@@ -45,7 +45,7 @@ Feature: Teste da funcionalidade de Livros
 
     Scenario: Listar os livros com perfil de Gestor
         Given Eu realize uma requisição para listar os livros
-        Then Verifico se a listagem da requisição dos livros é de "4"
+        Then Verifico se a listagem da requisição de "book" é de "4"
 
     Scenario Outline: Listar os livros por filtro "<filter>" com perfil de Gestor
         Given Eu realize uma requisicao para listar o livro pelo filtro "<filter>" com o valor "<value>"

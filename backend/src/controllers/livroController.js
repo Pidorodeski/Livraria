@@ -1,6 +1,6 @@
 import NaoEncontrado from "../erros/NaoEncontrado.js";
 import {livro} from "../models/index.js";
-import {processaBusca} from "../utils/validations.js"
+import { processaBuscaLivro } from "../utils/validations.js"
 
 class LivroController {
 
@@ -32,7 +32,7 @@ class LivroController {
 
     static listarLivroPorFiltro = async (req, res, next) => {
         try {
-            const busca = await processaBusca(req.query);
+            const busca = await processaBuscaLivro(req.query);
             if (busca !== null) {
                 const livroResultado = livro.find(busca).populate("autor");
                 req.resultado = livroResultado;

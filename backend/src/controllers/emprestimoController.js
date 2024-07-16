@@ -1,5 +1,6 @@
-import { emprestimo, livro, usuario } from "../models/index.js";
+import { emprestimo, livro, leitor } from "../models/index.js";
 import NaoEncontrado from "../erros/NaoEncontrado.js";
+import { format } from 'date-fns';
 
 class EmprestimoController {
     static listarEmprestimos = async (req, res, next) =>{
@@ -12,29 +13,61 @@ class EmprestimoController {
         }
     }
 
-
     static realizarEmprestimo = async (req, res, next) =>{
+        const current = format(new Date(), "yyyy-MM-dd'T'HH:mm:ss.SSSxxx");
+
         try {
-            const livroId = req.params.idLivro;
-            const usuarioId = req.params.idUsuario;
-            
+            const { livroId, usuarioId, dataDevolucao} = req.body;            
+            if(!livroId){
+                return res.status(400).json({message: "Id do livro deve ser informado!"});
+            }
+
+            if(!usuarioId){
+                return res.status(400).json({message: "Id do usuário deve ser informado!"});
+            }
+
+            if(!dataDevolucao){
+                dataDevolucao === null;
+            }
+
             const livroBusca = await livro.findById(livroId);
-            const usuarioBusca = await usuario.findById(usuarioId);
+            if(!livroBusca){
+                return next(new NaoEncontrado("Id do livro nao encontrado!"))
+            }
 
-            if (livroBusca !== null && usuarioBusca !== null){
-                if (livroBusca.estaDisponivel == true) {
-                    const novoEmprestimo = await emprestimo.create(req.body);
-                    res.status(201).json({message: "Emprestimo realizado com sucesso", emprestimo: novoEmprestimo})
-                    await livro.findByIdAndUpdate(livroId, { estaDisponivel: false });
+            const usuarioBusca = await leitor.findById(usuarioId);
+            if(!usuarioBusca){
+                return next(new NaoEncontrado("Id do usuário nao encontrado!"))
+            }
 
-                } else {
-                    res.status(400).send({message: "Livro já em emprestimo"})
-                }
+            if (livroBusca.estaDisponivel === true) {
+                const novoEmprestimo = await emprestimo.create({ livro: livroId, usuario: usuarioId, dataEmprestimo: current, dataDevolucao: dataDevolucao, devolvido: false});
+                res.status(201).json({message: "Emprestimo realizado com sucesso", emprestimo: novoEmprestimo})
+                await livro.findByIdAndUpdate(livroId, { estaDisponivel: false }, { new: true });
             } else {
-                next(new NaoEncontrado("Id do livro ou usuario não encontrado"))
+                res.status(400).send({message: "Livro já em emprestimo"})
             }
         } catch (error) {
             next(error);
+        }
+    }
+
+    static atualizarEmprestimo = async (req, res, next) =>{
+        const emprestimoId = await emprestimo.find({id: req.param});
+        if(!emprestimoId){
+            return res.status(400).json({message: "Id do emprestimo incorreto"})
+        }
+
+        try {
+            const { dataDevolucao, devolvido} = req.body;            
+            if(devolvido === true){
+
+            } else if(devolvido === false || devolvido ){
+                
+            }
+            
+        } catch (error) {
+            next(error)
         }
     }
 

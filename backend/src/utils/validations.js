@@ -1,6 +1,6 @@
 import { autores } from "../models/index.js";
 
-export async function processaBusca (parametros) {
+export async function processaBuscaLivro (parametros) {
 
     const  { editora, titulo, nomeAutor } = parametros;
     let busca = {};
@@ -14,9 +14,24 @@ export async function processaBusca (parametros) {
         busca = null;
       }
     }
-  
     return busca;
-  }
+}
+
+export async function processaBuscaAutor(parametros){
+    const {nome, nacionalidade} = parametros;
+    let busca = {};
+    if (nome) busca.nome = {$regex: nome, $options: "i"};
+    if (nacionalidade) busca.nacionalidade = {$regex: nacionalidade, $options: "i"};
+    return busca;
+}
+
+export async function processaBuscaLeitor(parametros){
+    const {nome, email} = parametros;
+    let busca = {};
+    if (nome) busca.nome = {$regex: nome, $options: "i"};
+    if (email) busca.email = {$regex: email, $options: "i"};
+    return busca
+}
 
 export function possuiPermissaoValidacao(metodos, metodoRequisicao) {
     return metodos[metodoRequisicao];

@@ -31,16 +31,6 @@ export function bookPost(
     })
 }
 
-export function findBookByName(bookName: string){
-    cy.request({
-        method: 'GET',
-        url: `${Cypress.env('apiUrl')}/livro/busca?titulo=${bookName}`,
-        headers: {
-            Authorization: `Bearer ${Cypress.env('JWTToken')}`
-        }
-    }).as('bookSearchName')
-}
-
 export function bookPut(
     id: string,
     titulo: string,
@@ -107,7 +97,7 @@ Given('Eu envie uma requisicao para cadastrar um livro com as informações', (b
 })
 
 Given('Eu obtenho o id do livro {string}', (bookName: string) =>{
-    findBookByName(bookName)
+    findBookByFilter("titulo", bookName)
 })
 
 Given('Eu realize uma requisicao para listar o livro pelo filtro {string} com o valor {string}', (filter: string, value: string) =>{
@@ -126,7 +116,7 @@ When('Eu envie uma requisicao para alterar o livro com as informações', (bookT
 })
 
 When('Eu envio uma requisição de Delete para o livro selecionado', () =>{
-    cy.get<Cypress.Response<any>>("@bookSearchName").then((response) => {
+    cy.get<Cypress.Response<any>>("@bookSearchFilter").then((response) => {
         bookDelete(response.body[0]._id)
     })
 })
@@ -167,20 +157,8 @@ Then('Verifico se o livro foi alterado corretamente', () =>{
     })
 })
 
-Then('Verifico se a listagem da requisição dos livros é de {string}', (qtd: string) =>{
-    cy.get<Cypress.Response<any>>("@bookGetList").then((response) => {
-        expect(response.body).have.length(+qtd)
-    })
-})
-
 Then('Verifico se a quantidade de livros listados é de {string}', (qtd: string) =>{
     cy.get<Cypress.Response<any>>("@bookSearchFilter").then((response) => {
         expect(response.body).have.length(+qtd)
-    })
-})
-
-Then('Verifico a mensagem {string} no {string}', (errorMessage: string, method: string) =>{
-    cy.get<Cypress.Response<any>>(`@book${method}`).then((response) => {
-        expect(response.body.message).to.eq(errorMessage);
     })
 })

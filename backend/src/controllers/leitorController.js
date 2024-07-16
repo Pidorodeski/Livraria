@@ -1,5 +1,6 @@
 import { validarFormatoEmail, validarCPF } from "../utils/validations.js";
 import { leitor } from "../models/index.js"
+import { processaBuscaLeitor } from "../utils/validations.js";
 
 class LeitorController {
     static listarLeitores = async (req, res, next) => {
@@ -21,6 +22,21 @@ class LeitorController {
                 res.status(200).send(idResultado);
             } else {
                 next(new NaoEncontrado("Id do Leitor nao encontrado"))
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static listarLeitorPorFiltro = async (req, res, next) =>{
+        try {
+            const busca = await processaBuscaLeitor(req.query);
+            if (busca !== null) {
+                const leitorResultado = leitor.find(busca);
+                req.resultado = leitorResultado;
+                next();
+            } else {
+                res.status(200).send([]);
             }
         } catch (error) {
             next(error);

@@ -1,5 +1,6 @@
 import NaoEncontrado from "../erros/NaoEncontrado.js";
 import { autores } from "../models/index.js";
+import { processaBuscaAutor } from "../utils/validations.js";
 
 class AutorController {
 
@@ -26,6 +27,21 @@ class AutorController {
     }
     } catch (error) {
       next(error);
+    }
+  }
+  
+  static listarAutoresPorFiltro = async (req, res, next) =>{
+    try {
+      const busca = await processaBuscaAutor(req.query);
+      if (busca !== null) {
+        const autorResultado = autores.find(busca);
+        req.resultado = autorResultado;
+        next();
+      } else {
+        res.status(200).send([]);
+      }
+    } catch (error) {
+      next(error)
     }
   }
 
