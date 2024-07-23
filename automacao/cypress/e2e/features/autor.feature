@@ -10,7 +10,7 @@ Feature: Teste de API da funcionalidade de autor
     Scenario: Cadastrar Autor com nome repedido com perfil de Administrador
         Given Eu envie uma requisição para cadastrar um Autor com as informações
         | Machado de Assis | Brasileiro |
-        Then Verifico a mensagem "Usuario gestor não possui acesso a rota post" no "Delete"
+        Then Verifico a mensagem "Nome inserido já cadastrado!" no "Post" 
 
     Scenario: Atualizar Autor com perfil de Administrador
         Given Eu obtenho o id do Autor "Machado de Assis"
