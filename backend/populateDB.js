@@ -27,6 +27,17 @@ mongoose.connect(process.env.DB_CONNECTION_STRING)
         ]);
         console.log('Dados antigos removidos das coleções');
 
+        const leitorDados = [
+            {nome: "João Silva", email: "joao.silva@teste.com", cpf: "123.456.789-00", dataNascimento: "1985-07-12"},
+            {nome: "Ana Souza", email: "ana.souza@teste.com", cpf: "987.654.321-00", dataNascimento: "1990-03-25"},
+            {nome: "Carlos Santos", email: "carlos.santos@teste.com", cpf: "234.567.890-00", dataNascimento: "1982-11-08"},
+            {nome: "Maria Oliveira", email: "maria.oliveira@teste.com", cpf: "876.543.210-00", dataNascimento: "1987-09-17"},
+            {nome: "Pedro Ferreira", email: "pedro.ferreira@teste.com", cpf: "345.678.901-00", dataNascimento: "1995-01-30"}
+        ]
+
+        const leitorInseridos = await leitor.insertMany(leitorDados);
+        console.log('Realizado insert dos dados de leitor com sucesso');
+
         const perfilAcesso = [
             {nomePerfil: 'admin', status: 1},
             {nomePerfil: 'gestor', status: 2},

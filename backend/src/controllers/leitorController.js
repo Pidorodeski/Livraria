@@ -1,5 +1,6 @@
 import { validarFormatoEmail, validarCPF } from "../utils/validations.js";
 import { leitor } from "../models/index.js"
+import { processaBuscaLeitor } from "../utils/validations.js";
 
 class LeitorController {
     static listarLeitores = async (req, res, next) => {
@@ -21,6 +22,21 @@ class LeitorController {
                 res.status(200).send(idResultado);
             } else {
                 next(new NaoEncontrado("Id do Leitor nao encontrado"))
+            }
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static listarLeitorPorFiltro = async (req, res, next) =>{
+        try {
+            const busca = await processaBuscaLeitor(req.query);
+            if (busca !== null) {
+                const leitorResultado = leitor.find(busca);
+                req.resultado = leitorResultado;
+                next();
+            } else {
+                res.status(200).send([]);
             }
         } catch (error) {
             next(error);
@@ -59,15 +75,21 @@ class LeitorController {
     static editarLeitor = async (req, res, next) => {
         try {
             const id = req.params.id;
-            const {nome, email, cpf, dataNascimento} = req.body;
+            const {email, cpf, dataNascimento} = req.body;
+            const leitorAlteracao = await leitor.findById(id)
 
-            if (email){
+            if(email !== leitorAlteracao.email){
                 return res.status(400).json({message: "E-mail não pode ser alterado"})
+            }
+            
+            if (!validarCPF(cpf)) {
+                return res.status(400).json({ message: "CPF inválido" });
             }
 
             const idResultado = await leitor.findByIdAndUpdate(id, {$set: req.body}, { new: true });
+
             if (idResultado !== null) {
-                res.status(200).send({message: "Leitor atualizado com sucesso"});
+                res.status(201).send({message: "Leitor atualizado com sucesso", leitor: idResultado});
             } else {
                 next(new NaoEncontrado("Id do leitor não localizado."));
             }

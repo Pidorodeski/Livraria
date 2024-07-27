@@ -1,6 +1,7 @@
 import { Before } from '@badeball/cypress-cucumber-preprocessor';
 import { insertAuthor } from './autor.steps';
 import { bookPost } from './livro.steps';
+import { insertLeitor } from './leitor.steps';
 
 const url = `${Cypress.env('apiUrl')}/auth/login`;
 
@@ -58,4 +59,14 @@ Before({tags: '@loginManager'}, () =>{
 
 Before({tags: '@needBooks'}, () =>{
     insertBooksCollections();
+})
+
+Before({tags: '@needAuthor'}, () =>{
+    insertAuthor('Autor 001', 'Brasileiro');
+    insertAuthor('Autor 002', 'Canadense');
+})
+
+Before({tags: '@needLeitor'}, () =>{
+    insertLeitor("Leitor Teste Um", "test01@rytha.com", "170.138.400-09", "1995-02-25")
+    insertLeitor("Leitor Teste Dois", "test02@rytha.com", "015.846.760-43", "2001-11-01")
 })

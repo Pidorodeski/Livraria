@@ -13,15 +13,12 @@ const emprestimoSchema = new mongoose.Schema(
         },
         dataEmprestimo: {
             type: Date,
-            default: Date.now,
-            required: true
           },
-          dataDevolucao: {
+        dataDevolucao: {
             type: Date
           },
-          devolvido: {
+        devolvido: {
             type: Boolean,
-            default: false
           }        
     },
     {
