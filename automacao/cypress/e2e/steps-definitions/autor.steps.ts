@@ -109,6 +109,7 @@ When('Eu envio uma requisição de Delete para o autor selecionado', () =>{
 
 Then('Verifico se o autor foi cadastrado corretamente', ()=>{
     cy.get<Cypress.Response<any>>("@authorPost").then((response) => {
+        console.log(response)
         const autor = {
             nome: "Machado de Assis",
             nacionalidade: "Brasileiro",
