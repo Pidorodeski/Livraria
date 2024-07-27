@@ -1,7 +1,7 @@
 import { Then } from "@badeball/cypress-cucumber-preprocessor";
 
 Then('Verifico a mensagem {string} no {string}', (errorMessage: string, method: string) =>{
-    cy.get<Cypress.Response<any>>(`@book${method}`).then((response) => {
+    cy.get<Cypress.Response<any>>(`@${method}`).then((response) => {
         expect(response.body.message).to.eq(errorMessage);
     })
 })

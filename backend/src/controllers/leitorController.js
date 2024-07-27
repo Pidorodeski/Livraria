@@ -75,15 +75,21 @@ class LeitorController {
     static editarLeitor = async (req, res, next) => {
         try {
             const id = req.params.id;
-            const {nome, email, cpf, dataNascimento} = req.body;
+            const {email, cpf, dataNascimento} = req.body;
+            const leitorAlteracao = await leitor.findById(id)
 
-            if (email){
+            if(email !== leitorAlteracao.email){
                 return res.status(400).json({message: "E-mail não pode ser alterado"})
+            }
+            
+            if (!validarCPF(cpf)) {
+                return res.status(400).json({ message: "CPF inválido" });
             }
 
             const idResultado = await leitor.findByIdAndUpdate(id, {$set: req.body}, { new: true });
+
             if (idResultado !== null) {
-                res.status(200).send({message: "Leitor atualizado com sucesso"});
+                res.status(201).send({message: "Leitor atualizado com sucesso", leitor: idResultado});
             } else {
                 next(new NaoEncontrado("Id do leitor não localizado."));
             }

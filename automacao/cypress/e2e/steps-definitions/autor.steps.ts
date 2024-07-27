@@ -43,7 +43,7 @@ export function authorPut(
 ){
     cy.request({
         method: 'PUT',
-        url: `${Cypress.env('apiUrl')}/author/${id}`,
+        url: `${Cypress.env('apiUrl')}/autor/${id}`,
         body: {
             nome,
             nacionalidade
@@ -110,26 +110,26 @@ When('Eu envio uma requisição de Delete para o autor selecionado', () =>{
 Then('Verifico se o autor foi cadastrado corretamente', ()=>{
     cy.get<Cypress.Response<any>>("@authorPost").then((response) => {
         const autor = {
-            nome: "O Senhor dos Aneis",
-            nacionalidade: "Saraiva",
-            _id: response.body.author._id
+            nome: "Machado de Assis",
+            nacionalidade: "Brasileiro",
+            _id: response.body.autores._id
         }
         expect(response.status).eq(201)
         expect(response.body.message).eq("Autor cadastrado com sucesso")
-        expect(response.body.livro).deep.eq(autor)
+        expect(response.body.autores).deep.eq(autor)
     })
 })
 
 Then('Verifico se o autor foi alterado corretamente', ()=>{
-    cy.get<Cypress.Response<any>>("@bookPut").then((response) => {
+    cy.get<Cypress.Response<any>>("@authorPut").then((response) => {
         const autor = {
             nome: "Jiraya Sennin",
             nacionalidade: "Japones",
-            _id: response.body.author._id
+            _id: response.body.autores._id
         }
         expect(response.status).eq(200)
-        expect(response.body.message).eq("Livro atualizado com sucesso")
-        expect(response.body.autor).deep.eq(autor)
+        expect(response.body.message).eq("Autor editado com sucesso!")
+        expect(response.body.autores).deep.eq(autor)
     })
 })
 

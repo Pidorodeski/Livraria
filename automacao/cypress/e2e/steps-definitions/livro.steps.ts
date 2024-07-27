@@ -105,7 +105,7 @@ Given('Eu realize uma requisicao para listar o livro pelo filtro {string} com o 
 })
 
 When('Eu envie uma requisicao para alterar o livro com as informações', (bookTable: any) =>{
-    cy.get<Cypress.Response<any>>("@bookSearchName").then((response) => {
+    cy.get<Cypress.Response<any>>("@bookSearchFilter").then((response) => {
         bookPut(
             response.body[0]._id,
             bookTable.rawTable[0][0],

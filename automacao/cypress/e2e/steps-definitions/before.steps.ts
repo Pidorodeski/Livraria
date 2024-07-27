@@ -67,6 +67,6 @@ Before({tags: '@needAuthor'}, () =>{
 })
 
 Before({tags: '@needLeitor'}, () =>{
-    insertLeitor("Leitor Teste Um", "test01@rytha.com", "000.000.000.00", "1995-02-25")
-    insertLeitor("Leitor Teste Dois", "test02@rytha.com", "000.000.000.00", "2001-11-01")
+    insertLeitor("Leitor Teste Um", "test01@rytha.com", "170.138.400-09", "1995-02-25")
+    insertLeitor("Leitor Teste Dois", "test02@rytha.com", "015.846.760-43", "2001-11-01")
 })
